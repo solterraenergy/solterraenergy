@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Solterra Energy – Clean Solar for Every Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    /* ── Reset & Variables ─────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sun:    #F5A623;
+      --green:  #2E7D55;
+      --green2: #3DAA72;
+      --teal:   #1A6B6B;
+      --blue:   #1565C0;
+      --sky:    #E8F4FD;
+      --mint:   #EAF7F0;
+      --cream:  #FDFCF8;
+      --dark:   #0F2417;
+      --text:   #243830;
+      --muted:  #6B8573;
+      --border: #D4E8DC;
+      --white:  #FFFFFF;
+      --radius: 16px;
+      --shadow: 0 8px 32px rgba(46,125,85,.12);
+      --ff-head: 'Playfair Display', Georgia, serif;
+      --ff-body: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--ff-body);
+      color: var(--text);
+      background: var(--cream);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    img { max-width: 100%; display: block; }
+    a  { color: inherit; text-decoration: none; }
+
+    /* ── Utility ───────────────────────────────────────────── */
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+    .section    { padding: 96px 0; }
+    .section-sm { padding: 64px 0; }
+    .tag {
+      display: inline-block;
+      font-size: .75rem; font-weight: 600; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--green2);
+      background: var(--mint); border: 1px solid var(--border);
+      padding: 6px 14px; border-radius: 100px; margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: var(--ff-head); font-size: clamp(2rem,4vw,2.8rem);
+      color: var(--dark); line-height: 1.2; margin-bottom: 16px;
+    }
+    .section-sub { font-size: 1.05rem; color: var(--muted); max-width: 560px; }
+    .center { text-align: center; }
+    .center .section-sub { margin: 0 auto; }
+
+    /* ── Buttons ───────────────────────────────────────────── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--ff-body); font-size: .95rem; font-weight: 600;
+      padding: 14px 28px; border-radius: 50px; cursor: pointer;
+      border: none; transition: all .25s;
+    }
+    .btn-primary {
+      background: var(--green); color: var(--white);
+      box-shadow: 0 4px 20px rgba(46,125,85,.35);
+    }
+    .btn-primary:hover { background: var(--green2); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(46,125,85,.4); }
+    .btn-sun {
+      background: var(--sun); color: #4A2800;
+      box-shadow: 0 4px 20px rgba(245,166,35,.4);
+    }
+    .btn-sun:hover { filter: brightness(1.08); transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent; color: var(--white);
+      border: 2px solid rgba(255,255,255,.55);
+    }
+    .btn-outline:hover { background: rgba(255,255,255,.12); }
+    .btn-wa {
+      background: #25D366; color: var(--white);
+      box-shadow: 0 4px 20px rgba(37,211,102,.35);
+    }
+    .btn-wa:hover { background: #1ebe5d; transform: translateY(-2px); }
+
+    /* ── Navbar ────────────────────────────────────────────── */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+      transition: background .35s, box-shadow .35s;
+      padding: 0;
+    }
+    #navbar.scrolled {
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 2px 20px rgba(0,0,0,.08);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 70px;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--ff-head); font-size: 1.5rem; color: var(--white);
+      font-weight: 700;
+    }
+    #navbar.scrolled .logo { color: var(--dark); }
+    .logo-icon {
+      width: 38px; height: 38px;
+      background: linear-gradient(135deg,#F5A623,#F77C1E);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 32px; list-style: none;
+    }
+    .nav-links a {
+      font-size: .9rem; font-weight: 500; color: rgba(255,255,255,.85);
+      transition: color .2s;
+    }
+    #navbar.scrolled .nav-links a { color: var(--text); }
+    .nav-links a:hover { color: var(--sun); }
+    #navbar.scrolled .nav-links a:hover { color: var(--green); }
+    .nav-cta { display: flex; align-items: center; gap: 12px; }
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer;
+      background: none; border: none; padding: 4px;
+    }
+    .hamburger span {
+      width: 24px; height: 2px; background: var(--white);
+      border-radius: 2px; transition: all .3s;
+    }
+    #navbar.scrolled .hamburger span { background: var(--dark); }
+    .mobile-menu {
+      display: none; flex-direction: column; gap: 0;
+      background: var(--white); border-top: 1px solid var(--border);
+      padding: 16px 24px 24px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      padding: 12px 0; font-weight: 500; color: var(--text);
+      border-bottom: 1px solid var(--border); font-size: .95rem;
+    }
+    .mobile-menu .btn { margin-top: 16px; text-align: center; justify-content: center; }
+
+    /* ── Hero ──────────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      background:
+        linear-gradient(160deg, rgba(15,36,23,.85) 0%, rgba(26,107,107,.7) 55%, rgba(21,101,192,.55) 100%),
+        url('https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=1600&q=80') center/cover no-repeat;
+      display: flex; align-items: center; padding-top: 70px;
+      position: relative; overflow: hidden;
+    }
+    #hero::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 120px;
+      background: linear-gradient(to top, var(--cream), transparent);
+      pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 700px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(245,166,35,.18); border: 1px solid rgba(245,166,35,.4);
+      color: var(--sun); font-size: .82rem; font-weight: 600;
+      letter-spacing: .06em; text-transform: uppercase;
+      padding: 7px 16px; border-radius: 100px; margin-bottom: 24px;
+    }
+    .hero-badge .dot { width: 7px; height: 7px; background: var(--sun); border-radius: 50%; animation: pulse 1.8s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+    .hero-title {
+      font-family: var(--ff-head);
+      font-size: clamp(2.4rem,5.5vw,4rem);
+      color: var(--white); line-height: 1.12;
+      margin-bottom: 20px;
+    }
+    .hero-title em { color: var(--sun); font-style: normal; }
+    .hero-sub {
+      font-size: 1.1rem; color: rgba(255,255,255,.82);
+      margin-bottom: 36px; max-width: 520px; line-height: 1.7;
+    }
+    .hero-btns { display: flex; flex-wrap: wrap; gap: 14px; }
+    .hero-stats {
+      display: flex; flex-wrap: wrap; gap: 32px; margin-top: 56px;
+    }
+    .stat { display: flex; flex-direction: column; }
+    .stat strong {
+      font-family: var(--ff-head); font-size: 2rem; color: var(--sun); line-height: 1;
+    }
+    .stat span { font-size: .82rem; color: rgba(255,255,255,.7); margin-top: 4px; }
+
+    /* ── Subsidy Banner ────────────────────────────────────── */
+    .subsidy-banner {
+      background: linear-gradient(90deg, var(--blue) 0%, var(--teal) 100%);
+      padding: 20px 0;
+    }
+    .subsidy-inner {
+      display: flex; align-items: center; justify-content: center;
+      gap: 16px; flex-wrap: wrap; text-align: center;
+    }
+    .subsidy-inner .icon { font-size: 1.6rem; }
+    .subsidy-inner p {
+      color: var(--white); font-size: .95rem; font-weight: 500;
+    }
+    .subsidy-inner strong { color: var(--sun); }
+
+    /* ── About ─────────────────────────────────────────────── */
+    #about { background: var(--cream); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center;
+    }
+    .about-image-wrap {
+      position: relative; border-radius: 24px; overflow: hidden;
+      aspect-ratio: 4/3;
+    }
+    .about-image-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .about-badge-float {
+      position: absolute; bottom: 24px; left: 24px;
+      background: var(--white); border-radius: 16px; padding: 16px 20px;
+      box-shadow: var(--shadow);
+      display: flex; align-items: center; gap: 12px;
+    }
+    .about-badge-float .emo { font-size: 2rem; }
+    .about-badge-float strong { display: block; font-size: 1.1rem; color: var(--green); }
+    .about-badge-float span { font-size: .8rem; color: var(--muted); }
+    .about-text .section-sub { margin-bottom: 24px; }
+    .mission-box {
+      background: var(--mint); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px;
+      margin-top: 28px;
+    }
+    .mission-box h4 {
+      font-family: var(--ff-head); color: var(--green); font-size: 1.15rem; margin-bottom: 8px;
+    }
+    .mission-box p { font-size: .93rem; color: var(--muted); line-height: 1.7; }
+
+    /* ── Services ──────────────────────────────────────────── */
+    #services { background: var(--mint); }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; margin-top: 56px;
+    }
+    .service-card {
+      background: var(--white); border-radius: 20px; padding: 36px 28px;
+      box-shadow: var(--shadow); transition: transform .3s, box-shadow .3s;
+      border: 1px solid var(--border); position: relative; overflow: hidden;
+    }
+    .service-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, var(--green), var(--teal));
+    }
+    .service-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(46,125,85,.18); }
+    .service-icon {
+      width: 64px; height: 64px; border-radius: 16px;
+      background: var(--mint); display: flex; align-items: center;
+      justify-content: center; font-size: 1.8rem; margin-bottom: 20px;
+    }
+    .service-card h3 { font-family: var(--ff-head); font-size: 1.25rem; color: var(--dark); margin-bottom: 12px; }
+    .service-card p  { font-size: .92rem; color: var(--muted); line-height: 1.65; }
+    .service-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--green); font-size: .88rem; font-weight: 600; margin-top: 20px;
+    }
+
+    /* ── Subsidy Section ───────────────────────────────────── */
+    #subsidy {
+      background:
+        linear-gradient(135deg, var(--blue) 0%, var(--teal) 60%, var(--green) 100%);
+      color: var(--white); position: relative; overflow: hidden;
+    }
+    #subsidy::before {
+      content: ''; position: absolute; top: -100px; right: -100px;
+      width: 400px; height: 400px; background: rgba(255,255,255,.04);
+      border-radius: 50%;
+    }
+    #subsidy::after {
+      content: ''; position: absolute; bottom: -80px; left: -80px;
+      width: 300px; height: 300px; background: rgba(245,166,35,.08);
+      border-radius: 50%;
+    }
+    .subsidy-content { position: relative; z-index: 2; }
+    .subsidy-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+    }
+    .subsidy-text .tag { color: var(--sun); background: rgba(245,166,35,.15); border-color: rgba(245,166,35,.3); }
+    .subsidy-text .section-title { color: var(--white); }
+    .subsidy-text .section-sub { color: rgba(255,255,255,.8); }
+    .subsidy-amount {
+      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+      backdrop-filter: blur(8px); border-radius: 20px; padding: 32px;
+      text-align: center; margin-top: 28px;
+    }
+    .subsidy-amount .rupee {
+      font-family: var(--ff-head); font-size: 3.5rem; color: var(--sun); line-height: 1;
+    }
+    .subsidy-amount p { color: rgba(255,255,255,.75); font-size: .9rem; margin-top: 8px; }
+    .subsidy-steps { display: flex; flex-direction: column; gap: 20px; }
+    .step-card {
+      background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15);
+      border-radius: 14px; padding: 20px 24px;
+      display: flex; align-items: flex-start; gap: 16px;
+    }
+    .step-num {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--sun); color: #4A2800;
+      font-weight: 700; font-size: .9rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-card h4 { color: var(--white); font-weight: 600; margin-bottom: 4px; }
+    .step-card p  { color: rgba(255,255,255,.7); font-size: .87rem; }
+
+    /* ── Benefits ──────────────────────────────────────────── */
+    #benefits { background: var(--cream); }
+    .benefits-grid {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 56px;
+    }
+    .benefit-card {
+      border-radius: 20px; padding: 32px 24px; position: relative;
+      overflow: hidden; transition: transform .3s;
+    }
+    .benefit-card:hover { transform: translateY(-4px); }
+    .benefit-card:nth-child(1) { background: var(--mint); }
+    .benefit-card:nth-child(2) { background: #E8F4FD; }
+    .benefit-card:nth-child(3) { background: #FEF9EC; }
+    .benefit-card:nth-child(4) { background: #F0EBF8; }
+    .benefit-card:nth-child(5) { background: #FDEEEE; }
+    .benefit-card:nth-child(6) { background: #E8F7F4; }
+    .benefit-icon { font-size: 2.5rem; margin-bottom: 16px; }
+    .benefit-card h3 { font-family: var(--ff-head); font-size: 1.15rem; color: var(--dark); margin-bottom: 10px; }
+    .benefit-card p  { font-size: .9rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── Gallery ───────────────────────────────────────────── */
+    #gallery { background: var(--dark); }
+    #gallery .section-title { color: var(--white); }
+    #gallery .section-sub  { color: rgba(255,255,255,.6); }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto auto;
+      gap: 16px; margin-top: 48px;
+    }
+    .gallery-item {
+      border-radius: 16px; overflow: hidden; position: relative;
+      aspect-ratio: 4/3; cursor: pointer;
+    }
+    .gallery-item:first-child {
+      grid-column: 1 / 3;
+      aspect-ratio: 16/9;
+    }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+    .gallery-item:hover img { transform: scale(1.05); }
+    .gallery-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(15,36,23,.7) 0%, transparent 60%);
+      opacity: 0; transition: opacity .3s;
+      display: flex; align-items: flex-end; padding: 20px;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-overlay span { color: var(--white); font-weight: 600; font-size: .9rem; }
+
+    /* ── Contact ───────────────────────────────────────────── */
+    #contact { background: var(--cream); }
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1.4fr; gap: 64px; align-items: start;
+    }
+    .contact-info .section-sub { margin-bottom: 36px; }
+    .info-card {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 20px 0; border-bottom: 1px solid var(--border);
+    }
+    .info-card:last-of-type { border-bottom: none; }
+    .info-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: var(--mint); display: flex; align-items: center;
+      justify-content: center; font-size: 1.2rem; flex-shrink: 0;
+    }
+    .info-card h4 { font-weight: 600; color: var(--dark); margin-bottom: 4px; }
+    .info-card p  { font-size: .9rem; color: var(--muted); }
+    .info-card a  { color: var(--green); font-weight: 500; }
+    .wa-direct {
+      margin-top: 28px; padding: 20px 24px;
+      background: #E9FBF0; border: 1px solid #A3E4BC;
+      border-radius: 14px; display: flex; align-items: center; gap: 12px;
+    }
+    .wa-direct .emo { font-size: 1.5rem; }
+    .wa-direct p { font-size: .88rem; color: #1A5C34; }
+    .wa-direct strong { display: block; font-size: .95rem; color: #145C30; margin-bottom: 2px; }
+
+    /* Form */
+    .form-card {
+      background: var(--white); border-radius: 24px; padding: 40px;
+      box-shadow: var(--shadow); border: 1px solid var(--border);
+    }
+    .form-card h3 {
+      font-family: var(--ff-head); font-size: 1.6rem; color: var(--dark);
+      margin-bottom: 6px;
+    }
+    .form-card .sub { font-size: .9rem; color: var(--muted); margin-bottom: 28px; }
+    .form-group { margin-bottom: 18px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    label { display: block; font-size: .85rem; font-weight: 600; color: var(--text); margin-bottom: 7px; }
+    label .req { color: #E53935; }
+    input, select, textarea {
+      width: 100%; font-family: var(--ff-body); font-size: .92rem;
+      color: var(--text); background: var(--mint);
+      border: 1.5px solid var(--border); border-radius: 10px;
+      padding: 12px 16px; transition: border .2s, box-shadow .2s; outline: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--green); box-shadow: 0 0 0 3px rgba(46,125,85,.12);
+    }
+    textarea { resize: vertical; min-height: 100px; }
+    .form-submit { margin-top: 8px; width: 100%; justify-content: center; font-size: 1rem; padding: 16px; }
+    .form-note { text-align: center; font-size: .8rem; color: var(--muted); margin-top: 12px; }
+
+    /* ── Footer ────────────────────────────────────────────── */
+    footer {
+      background: var(--dark);
+      color: rgba(255,255,255,.75);
+      padding: 60px 0 32px;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px;
+      padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .footer-brand .logo { margin-bottom: 16px; color: var(--white); }
+    .footer-brand p { font-size: .9rem; line-height: 1.7; max-width: 320px; }
+    footer h4 { color: var(--white); font-weight: 600; margin-bottom: 18px; font-size: .95rem; }
+    .footer-links { display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a { font-size: .88rem; color: rgba(255,255,255,.65); transition: color .2s; }
+    .footer-links a:hover { color: var(--sun); }
+    .footer-contact-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; }
+    .footer-contact-item .ic { font-size: 1rem; flex-shrink: 0; margin-top: 2px; }
+    .footer-contact-item p  { font-size: .88rem; color: rgba(255,255,255,.65); }
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 28px; flex-wrap: wrap; gap: 12px;
+    }
+    .footer-bottom p { font-size: .82rem; }
+    .footer-sun { color: var(--sun); }
+
+    /* ── Floating WhatsApp ─────────────────────────────────── */
+    .wa-float {
+      position: fixed; bottom: 28px; right: 28px; z-index: 900;
+      width: 58px; height: 58px; border-radius: 50%;
+      background: #25D366; color: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; box-shadow: 0 6px 24px rgba(37,211,102,.5);
+      transition: transform .25s;
+    }
+    .wa-float:hover { transform: scale(1.1); }
+
+    /* ── Animations ────────────────────────────────────────── */
+    .fade-up {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── Responsive ────────────────────────────────────────── */
+    @media (max-width: 960px) {
+      .about-grid    { grid-template-columns: 1fr; gap: 40px; }
+      .subsidy-grid  { grid-template-columns: 1fr; gap: 40px; }
+      .contact-grid  { grid-template-columns: 1fr; gap: 40px; }
+      .footer-grid   { grid-template-columns: 1fr 1fr; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .benefits-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-grid  { grid-template-columns: 1fr 1fr; }
+      .gallery-item:first-child { grid-column: 1 / 3; }
+    }
+    @media (max-width: 640px) {
+      .section { padding: 72px 0; }
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .services-grid { grid-template-columns: 1fr; }
+      .benefits-grid { grid-template-columns: 1fr; }
+      .gallery-grid  { grid-template-columns: 1fr; }
+      .gallery-item:first-child { grid-column: 1; aspect-ratio: 4/3; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .form-row { grid-template-columns: 1fr; }
+      .hero-btns { flex-direction: column; }
+      .hero-btns .btn { text-align: center; justify-content: center; }
+      .hero-stats { gap: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#hero" class="logo">
+        <div class="logo-icon">☀️</div>
+        Solterra Energy
+      </a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#subsidy">Subsidy</a></li>
+        <li><a href="#benefits">Benefits</a></li>
+        <li><a href="#gallery">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="#contact" class="btn btn-sun">Get a Free Quote</a>
+      </div>
+      <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about"    onclick="closeMenu()">About Us</a>
+    <a href="#services" onclick="closeMenu()">Services</a>
+    <a href="#subsidy"  onclick="closeMenu()">PM Surya Ghar</a>
+    <a href="#benefits" onclick="closeMenu()">Benefits</a>
+    <a href="#gallery"  onclick="closeMenu()">Projects</a>
+    <a href="#contact"  onclick="closeMenu()">Contact</a>
+    <a href="#contact"  onclick="closeMenu()" class="btn btn-sun">Get a Free Quote</a>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="dot"></span> PM Surya Ghar Yojana Approved
+      </div>
+      <h1 class="hero-title">
+        Power Your Home with<br/>
+        <em>Clean Solar Energy</em>
+      </h1>
+      <p class="hero-sub">
+        Save more with government-supported solar solutions. Solterra Energy brings affordable, reliable rooftop solar installations to every home in Kashmir — backed by up to ₹94,800 in subsidy.
+      </p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn btn-sun">☀️ Get a Free Quote</a>
+        <a href="#subsidy" class="btn btn-outline">Learn About Subsidy →</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><strong>₹94.8K</strong><span>Max Government Subsidy</span></div>
+        <div class="stat"><strong>90%</strong><span>Reduction in Bills</span></div>
+        <div class="stat"><strong>25yr</strong><span>Panel Warranty</span></div>
+        <div class="stat"><strong>500+</strong><span>Happy Homes</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="subsidy-banner">
+  <div class="container">
+    <div class="subsidy-inner">
+      <span class="icon">🏛️</span>
+      <p>
+        Government of India's <strong>PM Surya Ghar: Muft Bijli Yojana</strong> — Get up to <strong>₹94,800 subsidy</strong> on your rooftop solar installation. We handle all paperwork for you!
+      </p>
+      <a href="#subsidy" class="btn btn-sun" style="font-size:.85rem;padding:10px 20px;">Know More →</a>
+    </div>
+  </div>
+</div>
+
+<section id="about" class="section">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-image-wrap fade-up">
+        <img
+          src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&q=80"
+          alt="Solar panels on rooftop"
+          loading="lazy"
+        />
+        <div class="about-badge-float">
+          <span class="emo">🌿</span>
+          <div>
+            <strong>Eco-Friendly</strong>
+            <span>100% Clean Energy</span>
+          </div>
+        </div>
+      </div>
+      <div class="about-text fade-up">
+        <span class="tag">About Us</span>
+        <h2 class="section-title">Bringing Sunlight to Every Home in Kashmir</h2>
+        <p class="section-sub">
+          Solterra Energy was founded with a single purpose: making clean, affordable solar power accessible to every family in Jammu & Kashmir. Born from the valleys of Kashmir, we understand the unique energy challenges of our region — from power cuts to rising electricity bills.
+        </p>
+        <p style="color:var(--muted);font-size:.93rem;line-height:1.7">
+          Our certified team of engineers and installation experts work closely with every homeowner, from site assessment to commissioning — ensuring you get maximum solar output and maximum savings. We are an authorized installer under the PM Surya Ghar Yojana, meaning you get all government benefits handled end-to-end.
+        </p>
+        <div class="mission-box">
+          <h4>🎯 Our Mission</h4>
+          <p>To make sustainable solar energy the affordable, first choice for every home — creating a greener Kashmir, one rooftop at a time.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services" class="section">
+  <div class="container">
+    <div class="center fade-up">
+      <span class="tag">What We Offer</span>
+      <h2 class="section-title">Complete Solar Solutions</h2>
+      <p class="section-sub">From consultation to installation and beyond — we are your end-to-end solar partner.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card fade-up">
+        <div class="service-icon">🏠</div>
+        <h3>Rooftop Solar Installation</h3>
+        <p>Professional on-grid and off-grid rooftop solar panel installation for homes of all sizes. Certified installers, high-efficiency panels, and quality inverters from top brands.</p>
+        <a href="#contact" class="service-link">Get Quote →</a>
+      </div>
+      <div class="service-card fade-up">
+        <div class="service-icon">🔧</div>
+        <h3>Maintenance & Support</h3>
+        <p>Our job doesn't end at installation. We offer annual maintenance packages, panel cleaning, inverter servicing, and 24/7 remote monitoring to keep your system at peak performance.</p>
+        <a href="#contact" class="service-link">Learn More →</a>
+      </div>
+      <div class="service-card fade-up">
+        <div class="service-icon">📊</div>
+        <h3>Energy Consultation</h3>
+        <p>Not sure how much solar you need? Our experts visit your home, analyze your electricity bills and roof area, and recommend the ideal system size to maximize your savings and subsidy.</p>
+        <a href="#contact" class="service-link">Book Free Visit →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="subsidy" class="section">
+  <div class="container subsidy-content">
+    <div class="subsidy-grid">
+      <div class="subsidy-text fade-up">
+        <span class="tag">Government Scheme</span>
+        <h2 class="section-title">PM Surya Ghar: Muft Bijli Yojana</h2>
+        <p class="section-sub">
+          The Government of India has launched a landmark scheme to put solar panels on 1 crore homes. As an approved installer, Solterra Energy helps you claim every rupee of subsidy you deserve.
+        </p>
+        <div class="subsidy-amount">
+          <div class="rupee">₹94,800</div>
+          <p>Maximum subsidy for residential systems — directly credited to your bank account by the government.</p>
+        </div>
+      </div>
+      <div class="subsidy-steps fade-up">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <div>
+            <h4>Free Site Survey</h4>
+            <p>Our expert visits your home, checks your roof and electricity usage, and recommends the right solar system.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <div>
+            <h4>Subsidy Application</h4>
+            <p>We handle all paperwork and registration on the national portal — PM Surya Ghar — on your behalf.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <div>
+            <h4>Installation in Days</h4>
+            <p>Certified installation completed within 3–5 working days. Panels, inverter, wiring — all done by our team.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">4</div>
+          <div>
+            <h4>Subsidy in Your Account</h4>
+            <p>After inspection by the DISCOM, the government transfers your subsidy amount directly to your bank account.</p>
+          </div>
+        </div>
+        <a href="#contact" class="btn btn-sun" style="margin-top:8px;">Apply Now — It's Free ☀️</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="benefits" class="section">
+  <div class="container">
+    <div class="center fade-up">
+      <span class="tag">Why Solar</span>
+      <h2 class="section-title">A Brighter Future Starts at Your Rooftop</h2>
+      <p class="section-sub">Solar energy is more than just savings — it's a smarter way to live.</p>
+    </div>
+    <div class="benefits-grid">
+      <div class="benefit-card fade-up">
+        <div class="benefit-icon">💡</div>
+        <h3>Lower Electricity Bills</h3>
+        <p>Generate your own power and slash your monthly electricity bill by up to 90%. Most homeowners recover their investment within 4–5 years.</p>
+      </div>
+      <div class="benefit-card fade-up">
+        <div class="benefit-icon">🌱</div>
+        <h3>Eco-Friendly Living</h3>
+        <p>Every unit of solar power you generate reduces carbon emissions. A 3 kW system offsets over 4 tonnes of CO₂ every year — equivalent to planting 100 trees.</p>
+      </div>
+      <div class="benefit-card fade-up">
+        <div class="benefit-icon">🏡</div>
+        <h3>Increase Property Value</h3>
+        <p>Homes with solar installations command higher resale values. Buyers see solar as a premium asset that provides free energy for decades.</p>
+      </div>
+      <div class="benefit-card fade-up">
+        <div class="benefit-icon">🔋</div>
+        <h3>Energy Independence</h3>
+        <p>No more dependence on the grid or suffering through power cuts. With battery backup options, enjoy uninterrupted power — day or night.</p>
+      </div>
+      <div class="benefit-card fade-up">
+        <div class="benefit-icon">🏛️</div>
+        <h3>Government Subsidy</h3>
+        <p>Take advantage of up to ₹94,800 in direct subsidies and additional state incentives — making solar more affordable than ever before.</p>
+      </div>
+      <div class="benefit-card fade-up">
+        <div class="benefit-icon">🛡️</div>
+        <h3>25-Year Warranty</h3>
+        <p>Premium solar panels come with a 25-year performance warranty. Our workmanship warranty covers installation quality for 5 years.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery" class="section">
+  <div class="container">
+    <div class="center fade-up">
+      <span class="tag" style="color:var(--sun);background:rgba(245,166,35,.12);border-color:rgba(245,166,35,.25);">Our Projects</span>
+      <h2 class="section-title">Solar Installations Across Kashmir</h2>
+      <p class="section-sub" style="margin:0 auto;">Real homes, real savings. See what we've built for our community.</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="c.jpeg" alt="Large solar installation" loading="lazy"/>
+        <div class="gallery-overlay"><span>⚡ 5 kW Residential Installation</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="b.jpeg" alt="Rooftop solar panels" loading="lazy"/>
+        <div class="gallery-overlay"><span>🏠 5 kW Home System</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="a.jpeg" alt="Solar panels sunset" loading="lazy"/>
+        <div class="gallery-overlay"><span>☀️ 5 kW Rooftop Setup</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="d.jpeg" alt="Solar panels aerial" loading="lazy"/>
+        <div class="gallery-overlay"><span>🌿 Off-Grid System</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1566093097221-ac2335b09e70?w=900&q=80" alt="Engineer installing panels" loading="lazy"/>
+        <div class="gallery-overlay"><span>🔧 Installation in Progress</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="section">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info fade-up">
+        <span class="tag">Get In Touch</span>
+        <h2 class="section-title">Let's Power Your Home</h2>
+        <p class="section-sub">Ready to go solar? Reach out and our team will get back to you within a few hours.</p>
+
+        <div class="info-card">
+          <div class="info-icon">📞</div>
+          <div>
+            <h4>Phone</h4>
+            <p><a href="tel:+917006828336">+91 7006828336</a></p>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">💬</div>
+          <div>
+            <h4>WhatsApp</h4>
+            <p><a href="https://wa.me/919149909209" target="_blank" rel="noopener">+91 9149909209</a></p>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">📍</div>
+          <div>
+            <h4>Address</h4>
+            <p>Pahloo, Kulgam, Kashmir<br/>Jammu & Kashmir, India</p>
+          </div>
+        </div>
+
+        <div class="wa-direct">
+          <span class="emo">💬</span>
+          <div>
+            <strong>Prefer WhatsApp?</strong>
+            <p>Message us directly and get an instant reply from our solar experts.</p>
+          </div>
+        </div>
+        <a href="https://wa.me/919149909209" target="_blank" rel="noopener" class="btn btn-wa" style="margin-top:16px;width:100%;justify-content:center;">
+          Chat on WhatsApp
+        </a>
+      </div>
+
+      <div class="form-card fade-up">
+        <h3>Get a Free Quote</h3>
+        <p class="sub">Fill in your details and we'll respond via WhatsApp instantly ⚡</p>
+        <div id="contactForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">Full Name <span class="req">*</span></label>
+              <input type="text" id="fname" placeholder="e.g. Faheem Farooq "/>
+            </div>
+            <div class="form-group">
+              <label for="fphone">Phone Number <span class="req">*</span></label>
+              <input type="tel" id="fphone" placeholder="e.g. 7006828336" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fcity">City / Area</label>
+              <input type="text" id="fcity" placeholder="e.g. Kulgam" />
+            </div>
+            <div class="form-group">
+              <label for="fkw">System Size</label>
+              <select id="fkw">
+                <option value="Not sure">Not sure yet</option>
+                <option value="2 kW">2 kW</option>
+                <option value="3 kW">3 kW (Most Popular)</option>
+                <option value="4 kW">4 kW</option>
+                <option value="5 kW">5 kW</option>
+                <option value="6 kW">6 kW</option>
+                <option value="7 kW">7 kW</option>
+                <option value="8 kW">8 kW</option>
+                <option value="9 kW">9 kW</option>
+                <option value="10 kW">10 kW</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="fmsg">Message (Optional)</label>
+            <textarea id="fmsg" placeholder="Tell us about your electricity bill, roof type, or any questions..."></textarea>
+          </div>
+          <button class="btn btn-primary form-submit" onclick="submitToWhatsApp()">
+            ☀️ Send Inquiry via WhatsApp
+          </button>
+          <p class="form-note">🔒 Your details are shared only via WhatsApp. No spam, ever.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#hero" class="logo">
+          <div class="logo-icon">☀️</div>
+          Solterra Energy
+        </a>
+        <p>Affordable, government-backed rooftop solar installations for homes across Kashmir. Powering a greener future — one rooftop at a time.</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <div class="footer-links">
+          <a href="#about">About Us</a>
+          <a href="#services">Our Services</a>
+          <a href="#subsidy">PM Surya Ghar</a>
+          <a href="#benefits">Solar Benefits</a>
+          <a href="#gallery">Projects</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+      <div>
+        <h4>Contact Us</h4>
+        <div class="footer-contact-item">
+          <span class="ic">📞</span>
+          <p><a href="tel:+917006828336" style="color:rgba(255,255,255,.65)">+91 7006828336</a></p>
+        </div>
+        <div class="footer-contact-item">
+          <span class="ic">💬</span>
+          <p><a href="https://wa.me/919149909209" target="_blank" rel="noopener" style="color:rgba(255,255,255,.65)">+91 9149909209 (WhatsApp)</a></p>
+        </div>
+        <div class="footer-contact-item">
+          <span class="ic">📍</span>
+          <p>Pahloo, Kulgam, Kashmir</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 <span class="footer-sun">Solterra Energy</span>. All rights reserved.</p>
+      <p>Made with ☀️ in Kashmir, India</p>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/919149909209" target="_blank" rel="noopener" class="wa-float" title="Chat on WhatsApp">
+  💬
+</a>
+
+<script>
+  /* ── Navbar scroll effect ── */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  /* ── Mobile menu ── */
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+  function closeMenu() {
+    document.getElementById('mobileMenu').classList.remove('open');
+  }
+
+  /* ── Fade-up on scroll ── */
+  const fadeEls = document.querySelectorAll('.fade-up');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  fadeEls.forEach(el => observer.observe(el));
+
+  /* ── WhatsApp form submission ── */
+  function submitToWhatsApp() {
+    const name  = document.getElementById('fname').value.trim();
+    const phone = document.getElementById('fphone').value.trim();
+    const city  = document.getElementById('fcity').value.trim() || 'Not provided';
+    const kw    = document.getElementById('fkw').value;
+    const msg   = document.getElementById('fmsg').value.trim() || 'No message';
+
+    // Validation
+    if (!name) {
+      alert('Please enter your full name.');
+      document.getElementById('fname').focus();
+      return;
+    }
+    if (!phone || !/^[6-9]\d{9}$/.test(phone.replace(/\s/g, ''))) {
+      alert('Please enter a valid 10-digit Indian phone number.');
+      document.getElementById('fphone').focus();
+      return;
+    }
+
+    // Build message
+    const text =
+      `New Solar Inquiry ☀️\n` +
+      `Name: ${name}\n` +
+      `Phone: ${phone}\n` +
+      `City: ${city}\n` +
+      `System Size: ${kw}\n` +
+      `Message: ${msg}`;
+
+    const encoded = encodeURIComponent(text);
+    const url = `https://wa.me/919149909209?text=${encoded}`;
+    window.open(url, '_blank');
+  }
+
+  /* ── Allow Enter key on form ── */
+  document.getElementById('contactForm').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+      submitToWhatsApp();
+    }
+  });
+</script>
+</body>
+</html>
